@@ -1,25 +1,32 @@
 import React, { useState, useEffect } from "react";
+import { LandingPage } from "./LandingPage";
 import { Auth } from "./Auth";
 import { Dashboard } from "./Dashboard";
 
 const Index = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [currentView, setCurrentView] = useState<'landing' | 'auth' | 'dashboard'>('landing');
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // Check if user is already authenticated
     const token = localStorage.getItem("authToken");
-    setIsAuthenticated(!!token);
+    if (token) {
+      setCurrentView('dashboard');
+    }
     setIsLoading(false);
   }, []);
 
+  const handleGetStarted = () => {
+    setCurrentView('auth');
+  };
+
   const handleAuthSuccess = () => {
-    setIsAuthenticated(true);
+    setCurrentView('dashboard');
   };
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
-    setIsAuthenticated(false);
+    setCurrentView('landing');
   };
 
   if (isLoading) {
@@ -33,11 +40,13 @@ const Index = () => {
     );
   }
 
-  return isAuthenticated ? (
-    <Dashboard onLogout={handleLogout} />
-  ) : (
-    <Auth onAuthSuccess={handleAuthSuccess} />
-  );
+  if (currentView === 'landing') {
+    return <LandingPage onGetStarted={handleGetStarted} />;
+  } else if (currentView === 'auth') {
+    return <Auth onAuthSuccess={handleAuthSuccess} />;
+  } else {
+    return <Dashboard onLogout={handleLogout} />;
+  }
 };
 
 export default Index;

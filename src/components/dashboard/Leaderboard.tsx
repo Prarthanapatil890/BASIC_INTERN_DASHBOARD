@@ -81,9 +81,13 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ leaderboard, currentUs
                 {getRankIcon(entry.rank)}
               </div>
               <Avatar className="mx-auto mb-4 h-16 w-16">
-                <AvatarFallback className="bg-gradient-primary text-white font-bold text-lg">
-                  {entry.avatar}
-                </AvatarFallback>
+                {entry.avatar ? (
+                  <img src={entry.avatar} alt={entry.name} className="w-full h-full object-cover" />
+                ) : (
+                  <AvatarFallback className="bg-gradient-primary text-white font-bold text-lg">
+                    {entry.name.split(' ').map(n => n[0]).join('')}
+                  </AvatarFallback>
+                )}
               </Avatar>
               <h3 className="font-semibold text-lg mb-2">{entry.name}</h3>
               <p className="text-2xl font-bold text-primary mb-2">
@@ -124,9 +128,13 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ leaderboard, currentUs
                     {getRankIcon(entry.rank)}
                   </div>
                   <Avatar className="h-10 w-10">
-                    <AvatarFallback className="bg-gradient-primary text-white font-semibold">
-                      {entry.avatar}
-                    </AvatarFallback>
+                    {entry.avatar ? (
+                      <img src={entry.avatar} alt={entry.name} className="w-full h-full object-cover" />
+                    ) : (
+                      <AvatarFallback className="bg-gradient-primary text-white font-semibold">
+                        {entry.name.split(' ').map(n => n[0]).join('')}
+                      </AvatarFallback>
+                    )}
                   </Avatar>
                   <div>
                     <div className="flex items-center space-x-2">

@@ -54,9 +54,13 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-3">
             <Avatar>
-              <AvatarFallback className="bg-gradient-primary text-white font-semibold">
-                {internData.avatar || internData.name.split(' ').map(n => n[0]).join('')}
-              </AvatarFallback>
+              {internData.avatar ? (
+                <img src={internData.avatar} alt={internData.name} className="w-full h-full object-cover" />
+              ) : (
+                <AvatarFallback className="bg-gradient-primary text-white font-semibold">
+                  {internData.name.split(' ').map(n => n[0]).join('')}
+                </AvatarFallback>
+              )}
             </Avatar>
             <div className="hidden md:block">
               <p className="text-sm font-medium text-foreground">{internData.name}</p>
